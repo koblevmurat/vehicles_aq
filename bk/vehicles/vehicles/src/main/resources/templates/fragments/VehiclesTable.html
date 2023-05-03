@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+  <table th:fragment = "vehicles-table" th:border="1" id="" class="display" style="width:100%">
+    <thead>
+        <th>Дата подачи</th>
+        <th>Водитель</th>
+        <th>Документы</th>
+        <th>Транспорт</th>
+        <th>Номер авто</th>
+        <th>Прицеп</th>
+        <th>Номер прицепа</th>
+        <th style="display:none">UID_Doc</th>
+        <th>Статус</th>
+        <th style="display:none">hiddenStatus</th>
+    </thead>
+    <tr th:each="vehicle : ${vehicles}" >
+      <td th:text="${vehicle.getTime}"></td>
+      <td th:text="${vehicle.driver}"></td>
+      <td th:text="${vehicle.docs}"></td>
+      <td th:text="${vehicle.vehicle}"></td>
+      <td th:text="${vehicle.veh_number}"></td>
+      <td th:text="${vehicle.trailer}"></td>
+      <td th:text="${vehicle.trailer_number}"></td>
+      <td th:text="${vehicle.uidDoc}" style="display:none"></td>
+
+      <td>
+          <select id="select" ng-model="selectItem">
+              <option value="expectation" th:selected="${vehicle.status == 'expectation'}"> Ждет погрузки</option>
+              <option value="left" th:selected="${vehicle.status == 'left'}">Уехал</option>
+              <option value="missed" th:selected="${vehicle.status == 'missed'}">На территории</option>
+          </select>
+          <input type="button" title="confirm" value="Подтвердить" onclick="confirmClicked(this)">
+
+      </td>
+        <td th:text="${vehicle.status}" style="display:none">
+
+        </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+

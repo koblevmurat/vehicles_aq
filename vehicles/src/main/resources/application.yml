@@ -1,0 +1,7 @@
+1c:
+  datasource:
+    url: http://localhost/upr/hs/SpisokMachin/
+    userName1c:  vorota
+    password1c: 60xotiK
+  application:
+    name: Vehicles app

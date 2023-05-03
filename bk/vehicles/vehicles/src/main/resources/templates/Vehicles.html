@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--  <link rel="stylesheet" type="text/css" media="all"-->
+    <!--        href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}" />-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="/js/vehivles.js"></script>
+
+    <script>
+          $(document).ready(function () {
+
+            $('table.display').DataTable(
+                {
+                    "rowCallback": function( row, data) {
+                        if (data[9] == 'missed' ) {
+                                    $( row ).css( "background-color", "red" );
+                                    $( row ).addClass( "warning" );
+                         }
+                    }
+                }
+            );
+           });
+    </script>
+</head>
+
+<body>
+
+<div  th:each="portion : ${response}">
+
+    <h1 th:align="center" th:text="${portion.getDateTime}"></h1>
+    <div th:replace = "fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})"></div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Транспортные средства</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="/js/vehicles.js"></script>
+    <script>
+        setTimeout(() => {
+            window.location.reload();
+        }, "60000")
+    </script>
+
+    <script>
+          $(document).ready(function () {
+            $('table.display').DataTable(
+                {
+                    "pageLength": 25,
+                    "rowCallback": function( row, data) {
+                        if (data[11] == 'missed' ) {
+                                    $( row ).css( "background-color", "yellow" );
+                                    $( row ).addClass( "missed" );
+                        } else if (data[11] == 'left' ) {
+                            $( row ).css( "background-color", "LightGreen" );
+                            $( row ).addClass( "left" );
+                        }
+                    }
+                }
+            );
+           });
+    </script>
+</head>
+
+<body>
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <div  th:each="portion, iStat : ${response}">
+        <div th:switch="${iStat.index}">
+            <div th:case="'0'">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active"
+                            id="pills-vehicle-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-vehicle"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-vehicle"
+                            aria-selected="true">
+                        <h3 th:align="center" th:text="${response[0].getDateTime}"></h3>
+                    </button>
+                </li>
+            </div>
+            <div th:case="'1'" >
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            id="vehicles-tomorrow-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#vehicles-tomorrow"
+                            type="button"
+                            role="tab"
+                            aria-controls="vehicles-tomorrow"
+                            aria-selected="false">
+                        <h3 th:align="center" th:text="${response[1].getDateTime}"></h3>
+                    </button>
+                </li>
+            </div>
+            <div th:case="'2'" >
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            id="vehicles-after-tomorrow-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#vehicles-after-tomorrow"
+                            type="button"
+                            role="tab"
+                            aria-controls="vehicles-after-tomorrow"
+                            aria-selected="false">
+                        <h3 th:align="center" th:text="${response[2].getDateTime}"></h3>
+                    </button>
+                </li>
+            </div>
+        </div>
+    </div>
+</ul>
+
+<div  th:each="portion, iStat : ${response}">
+    <div class="tab-content" id="pills-tabContent">
+        <td th:switch="${iStat.index}">
+                <div th:case="'0'" class="tab-pane fade" id="pills-vehicle" role="tabpanel" aria-labelledby="pills-vehicle-tab" tabindex="0">
+<!--                    <div th:replace = "fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})"></div>-->
+                    <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+                </div>
+
+                <div th:case="'1'" class="tab-pane fade" id="vehicles-tomorrow" role="tabpanel" aria-labelledby="vehicles-tomorrow-tab" tabindex="0">
+                    <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+                </div>
+
+                <div th:case="'2'" class="tab-pane fade" id="vehicles-after-tomorrow" role="tabpanel" aria-labelledby="vehicles-after-tomorrow-tab" tabindex="0">
+                     <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+                </div>
+        </td>
+    </div>
+</div>
+<script>
+
+    try {
+        const triggerTabList = document.querySelectorAll('#pills-tab button');
+        triggerTabList.forEach(triggerEl => {
+            const tabTrigger = new bootstrap.Tab(triggerEl);
+
+            triggerEl.addEventListener('click', event => {
+                event.preventDefault()
+                tabTrigger.show()
+            })
+        });
+
+        //const triggerEl = document.querySelector("#pills-tab li:first-child button");
+        //const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
+        const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#vehicles-tomorrow"]');
+        bootstrap.Tab.getInstance(triggerEl).show();
+        const triggerEl2 = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
+        bootstrap.Tab.getInstance(triggerEl2).show();
+    } catch (error) {
+        console.error(error);
+    }
+
+</script>
+
+</body>
+</html>

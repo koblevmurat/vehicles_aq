@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+  <table th:fragment = "vehicles-table" th:border="1" id="" class="display" style="width:100%">
+    <thead>
+        <th>Дата подачи</th>
+        <th>Время заезда</th>
+        <th>Время выезда</th>
+        <th>Статус</th>
+        <th>Водитель</th>
+        <th>Документы</th>
+        <th>Транспорт</th>
+        <th>Номер авто</th>
+        <th>Прицеп</th>
+        <th>Номер прицепа</th>
+        <th style="display:none">UID_Doc</th>
+        <th style="display:none">hiddenStatus</th>
+    </thead>
+
+    <tr th:each="vehicle : ${vehicles}">
+      <td th:text="${vehicle.getTime}"></td>
+      <td th:text="${vehicle.missedDateTime}"></td>
+      <td th:text="${vehicle.leftDateTime}"></td>
+      <td th:switch="${vehicle.status}">
+            <span th:case="'left'">
+                <input type="button"
+                       title="Уехал"
+                       value="Уехал"
+                       onclick="confirmClicked(this)"
+                       th:disabled=True>
+            </span>
+            <span th:case="'missed'">
+                <input type="button"
+                       title="Выезд"
+                       value="Выезд"
+                       onclick="confirmClicked(this)"
+                       th:disabled=False>
+            </span>
+            <span th:case="'expectation'">
+                <input type="button"
+                       title="Заезд"
+                       value="Заезд"
+                       onclick="confirmClicked(this)"
+                       th:disabled=False>
+            </span>
+      </td>
+      <td th:text="${vehicle.driver}"></td>
+      <td th:text="${vehicle.docs}"></td>
+      <td th:text="${vehicle.vehicle}"></td>
+      <td th:text="${vehicle.veh_number}"></td>
+      <td th:text="${vehicle.trailer}"></td>
+      <td th:text="${vehicle.trailer_number}"></td>
+      <td th:text="${vehicle.uidDoc}" style="display:none"></td>
+      <td th:text="${vehicle.status}" style="display:none"></td>
+    </tr>
+
+  </table>
+
+</body>
+</html>
+
