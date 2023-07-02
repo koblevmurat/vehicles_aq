@@ -33,16 +33,16 @@ public class ResponseRepository implements IResponseRepository {
     private String Url1c;
     @Override
     public List<Response1c> getResponse() throws URISyntaxException, IOException, InterruptedException {
-//        String basicAuth = SimpleAuthenticator.getBasicAuthenticationHeader(userName1c, password1c);
-//        HttpClient client = HttpClient.newHttpClient();
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .setHeader("Authorization", basicAuth)
-//                .uri(new URI(Url1c))
-//                .GET()
-//                .build();
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        //String json = (String)response.body();
-        String json = TestData.GetTestData();
+        String basicAuth = SimpleAuthenticator.getBasicAuthenticationHeader(userName1c, password1c);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .setHeader("Authorization", basicAuth)
+                .uri(new URI(Url1c))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String json = (String)response.body();
+        //String json = TestData.GetTestData();
         Response1c[] response1c = (Response1c[])(new Gson()).fromJson(json, Response1c[].class);
         return Arrays.stream(response1c).toList();
     }
