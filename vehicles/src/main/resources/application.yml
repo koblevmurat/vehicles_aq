@@ -1,6 +1,6 @@
 1c:
   datasource:
-    url: http://172.16.3.15//copy1/hs/SpisokMachin
+    url: http://localhost/upr/hs/SpisokMachin/
     userName1c: vorota
     password1c: 60xotiK
   application:
