@@ -27,11 +27,14 @@
                 {
                     "pageLength": 25,
                     "rowCallback": function( row, data) {
-                        if (data[11] == 'missed' ) {
+                        if (data[12] == 'missed' ) {
                                     $( row ).css( "background-color", "yellow" );
                                     $( row ).addClass( "missed" );
-                        } else if (data[11] == 'left' ) {
+                        } else if (data[12] == 'left' ) {
                             $( row ).css( "background-color", "LightGreen" );
+                            $( row ).addClass( "left" );
+                        } else if (data[12] == 'arrived' ) {
+                            $( row ).css( "background-color", "Green" );
                             $( row ).addClass( "left" );
                         }
                     }

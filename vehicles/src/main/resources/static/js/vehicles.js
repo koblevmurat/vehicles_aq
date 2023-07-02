@@ -11,10 +11,12 @@ function confirmClicked(e){
         return;
     } else {
         var $row = $(e).closest("tr");
-        var docUID=$row.find("td:eq(10)").text();
-        var currStat=$row.find("td:eq(11)").text();
-        var nextStat = 'missed';
+        var docUID=$row.find("td:eq(11)").text();
+        var currStat=$row.find("td:eq(12)").text();
+        var nextStat = 'arrived';
         if (currStat == "expectation") {
+            nextStat = 'arrived';
+        } else if (currStat == "arrived") {
             nextStat = 'missed';
         } else if (currStat == "missed") {
             nextStat = 'left';
@@ -39,6 +41,11 @@ function confirmClicked(e){
                 } else if (nextStat == 'left') {
                     e.disabled = true;
                     e.value = 'Уехал';
+                    $row.css( "background-color", "LightGreen" );
+                    $row.addClass( "left" );
+                } else if (nextStat == 'arrived') {
+                    e.disabled = true;
+                    e.value = 'Заезд';
                     $row.css( "background-color", "LightGreen" );
                     $row.addClass( "left" );
                 }
