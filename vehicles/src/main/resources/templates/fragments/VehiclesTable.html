@@ -13,6 +13,7 @@
   <table th:fragment = "vehicles-table" th:border="1" id="" class="display" style="width:100%">
     <thead>
         <th>Дата подачи</th>
+        <th>Время прибытия</th>
         <th>Время заезда</th>
         <th>Время выезда</th>
         <th>Статус</th>
@@ -28,6 +29,7 @@
 
     <tr th:each="vehicle : ${vehicles}">
       <td th:text="${vehicle.getTime}"></td>
+      <td th:text="${vehicle.arrivedDateTime}"></td>
       <td th:text="${vehicle.missedDateTime}"></td>
       <td th:text="${vehicle.leftDateTime}"></td>
       <td th:switch="${vehicle.status}">
@@ -46,6 +48,13 @@
                        th:disabled=False>
             </span>
             <span th:case="'expectation'">
+                <input type="button"
+                       title="Прибытие"
+                       value="Прибытие"
+                       onclick="confirmClicked(this)"
+                       th:disabled=False>
+            </span>
+            <span th:case="'arrived'">
                 <input type="button"
                        title="Заезд"
                        value="Заезд"
