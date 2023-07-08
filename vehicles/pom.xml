@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.aqu</groupId>
 	<artifactId>vehicles</artifactId>
-	<version>0.0.7-BETTA</version>
+	<version>0.0.8-BETTA</version>
 	<name>vehicles</name>
 	<description>vehicles web app</description>
 	<properties>

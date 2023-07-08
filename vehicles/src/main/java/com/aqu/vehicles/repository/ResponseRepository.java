@@ -54,7 +54,8 @@ public class ResponseRepository implements IResponseRepository {
             String requestBody = objectMapper
                     .writerWithDefaultPrettyPrinter()
                     .writeValueAsString(mapDocStatus);
-
+//            System.out.println("sending post");
+//            System.out.printf(requestBody);
             String basicAuth = SimpleAuthenticator.getBasicAuthenticationHeader(userName1c, password1c);
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
