@@ -18,7 +18,7 @@
     <script>
         setTimeout(() => {
             window.location.reload();
-        }, "10000")
+        }, "180000")
     </script>
 
     <script>
@@ -57,7 +57,7 @@
                             type="button"
                             role="tab"
                             aria-controls="pills-vehicle"
-                            aria-selected="true">
+                            aria-selected="false">
                         <h3 th:align="center" th:text="${response[0].getDateTime}"></h3>
                     </button>
                 </li>
@@ -71,7 +71,7 @@
                             type="button"
                             role="tab"
                             aria-controls="vehicles-tomorrow"
-                            aria-selected="false">
+                            aria-selected="true">
                         <h3 th:align="center" th:text="${response[1].getDateTime}"></h3>
                     </button>
                 </li>
@@ -97,21 +97,22 @@
 <div  th:each="portion, iStat : ${response}">
     <div class="tab-content" id="pills-tabContent">
         <td th:switch="${iStat.index}">
-                <div th:case="'0'" class="tab-pane fade" id="pills-vehicle" role="tabpanel" aria-labelledby="pills-vehicle-tab" tabindex="0">
-<!--                    <div th:replace = "fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})"></div>-->
-                    <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
-                </div>
+            <div th:case="'0'" class="tab-pane fade" id="pills-vehicle" role="tabpanel" aria-labelledby="pills-vehicle-tab" tabindex="0">
+                <!--                    <div th:replace = "fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})"></div>-->
+                <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+            </div>
 
-                <div th:case="'1'" class="tab-pane fade" id="vehicles-tomorrow" role="tabpanel" aria-labelledby="vehicles-tomorrow-tab" tabindex="0">
-                    <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
-                </div>
+            <div th:case="'1'" class="tab-pane fade" id="vehicles-tomorrow" role="tabpanel" aria-labelledby="vehicles-tomorrow-tab" tabindex="0">
+                <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+            </div>
 
-                <div th:case="'2'" class="tab-pane fade" id="vehicles-after-tomorrow" role="tabpanel" aria-labelledby="vehicles-after-tomorrow-tab" tabindex="0">
-                     <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
-                </div>
+            <div th:case="'2'" class="tab-pane fade" id="vehicles-after-tomorrow" role="tabpanel" aria-labelledby="vehicles-after-tomorrow-tab" tabindex="0">
+                <div th:replace = "~{fragments/VehiclesTable :: vehicles-table (vehicles = ${portion.responseData})}"></div>
+            </div>
         </td>
     </div>
 </div>
+
 <script>
 
     try {
@@ -129,13 +130,42 @@
         //const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
         const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#vehicles-tomorrow"]');
         bootstrap.Tab.getInstance(triggerEl).show();
-        const triggerEl2 = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
-        bootstrap.Tab.getInstance(triggerEl2).show();
+        // const triggerEl2 = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
+        // bootstrap.Tab.getInstance(triggerEl2).show();
+
+
+        //const triggerEl = document.querySelector("#pills-tab li:first-child button");
+        //const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#pills-vehicle"]');
+        // const triggerEl0 = document.querySelector('#pills-tab button[data-bs-target="#vehicles-today"]');
+        // bootstrap.Tab.getInstance(triggerEl0).show();
+
+        // const triggerEl = document.querySelector('#pills-tab button[data-bs-target="#vehicles-tomorrow"]');
+        // bootstrap.Tab.getInstance(triggerEl).show();
+        // const triggerEl2 = document.querySelector('#pills-tab button[data-bs-target="#vehicles-today"]');
+        // bootstrap.Tab.getInstance(triggerEl2).show();
     } catch (error) {
         console.error(error);
     }
 
 </script>
+
+<script>
+
+    $('#pills-tabContent a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+    // $('#pills-tabContent li:nth-child(1) a').tab('show')
+
+    // $(function () {
+    //     $('#vehicles-tabContent li:last-child a').tab('show')
+    // })
+
+    // $('#vehicles-tomorrow').tab('show')
+</script>
+
+
 
 </body>
 </html>
